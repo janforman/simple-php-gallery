@@ -1,0 +1,80 @@
+body { background-color: #222222; color: #888888; FONT-FAMILY: Roboto; margin:0px }
+@font-face { font-family: 'roboto'; font-style: normal; font-weight: 400; src: local('roboto'), local('roboto'), url(assets/fonts/Roboto-Regular.woff) format('woff');}
+a {color: #cccccc; text-decoration:none}
+
+h1, h2 {
+    display: inline;
+}
+
+@-webkit-keyframes fadeElement{100%{opacity:1;}
+0%{opacity:0;}
+}
+@keyframes fadeElement{100%{opacity:1;}
+0%{opacity:0;}
+}
+
+div.gallery {
+  padding: 0px;
+  position: relative;
+  animation:fadeElement 1000ms;
+}
+
+div.gallery:hover {
+  filter: brightness(80%);
+}
+
+div.gallery img {
+  width: 100%;
+  height: auto;
+}
+
+div.desc {
+  padding: 10px;
+  text-align: left;
+  position: absolute;
+  bottom: 10px;
+  color: #ffffff;
+  text-shadow: 1px 1px 2px #333333;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.responsive {
+  padding: 0px 4px 0px 4px;
+  float: left;
+  width: 24.99999%;
+}
+
+.mapthumb {max-width: 250px;max-height: 250px}
+
+#map {width: 100%; height: 350px}
+
+@media only screen and (max-width: 700px) {
+  .responsive {
+    width: 49.99999%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .responsive {
+    width: 100%;
+  }
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+  padding: 1px;
+}
+
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  padding: 0px;
+  background-color: #222222;
+  z-index: 99;
+}
