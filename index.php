@@ -28,7 +28,7 @@ function main()
   if ($json[$folder]['title']) echo '<h2>' . $json[$folder]['title'] . '</h2> - ';
   if ($json[$folder]['readme']) echo $json[$folder]['readme'] . ' - ';
 
-  echo '<a href="https://github.com/janforman/">SimplePHP Galery © 2020 Jan Forman</a><br/>';
+  echo '<a href="https://github.com/janforman/simple-php-gallery/">SimplePHP Galery © 2020 Jan Forman</a><br/>';
   echo '</div>    <div class="clearfix"></div>';
 
   if (!$_GET['f']) {
