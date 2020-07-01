@@ -1,22 +1,48 @@
-body { background-color: #222222; color: #888888; FONT-FAMILY: Roboto; margin:0px }
-@font-face { font-family: 'roboto'; font-style: normal; font-weight: 400; src: local('roboto'), local('roboto'), url(assets/fonts/Roboto-Regular.woff) format('woff');}
-a {color: #cccccc; text-decoration:none}
+body {
+  background-color: #222222;
+  color: #888888;
+  FONT-FAMILY: Roboto;
+  margin: 0px
+}
+
+@font-face {
+  font-family: 'roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('roboto'), local('roboto'), url(assets/fonts/Roboto-Regular.woff) format('woff');
+}
+
+a {
+  color: #cccccc;
+  text-decoration: none
+}
 
 h1, h2 {
-    display: inline;
+  display: inline;
 }
 
-@-webkit-keyframes fadeElement{100%{opacity:1;}
-0%{opacity:0;}
+@-webkit-keyframes fadeElement {
+  100% {
+    opacity: 1;
+  }
+  0% {
+    opacity: 0;
+  }
 }
-@keyframes fadeElement{100%{opacity:1;}
-0%{opacity:0;}
+
+@keyframes fadeElement {
+  100% {
+    opacity: 1;
+  }
+  0% {
+    opacity: 0;
+  }
 }
 
 div.gallery {
   padding: 0px;
   position: relative;
-  animation:fadeElement 1000ms;
+  animation: fadeElement 1000ms;
 }
 
 div.gallery:hover {
@@ -47,19 +73,37 @@ div.desc {
   width: 24.99999%;
 }
 
-.mapthumb {max-width: 250px;max-height: 250px}
+.mapthumb {
+  max-width: 250px;
+  max-height: 250px
+}
 
-#map {width: 100%; height: 350px}
+#map {
+  width: 100%;
+  height: 350px
+}
 
 @media only screen and (max-width: 700px) {
   .responsive {
     width: 49.99999%;
+  }
+  #map {
+    display: none;
   }
 }
 
 @media only screen and (max-width: 500px) {
   .responsive {
     width: 100%;
+  }
+  #map {
+    display: none;
+  }
+}
+
+@media only screen and (orientation: portrait) {
+  .responsive {
+    width: 49.99999%;
   }
 }
 
