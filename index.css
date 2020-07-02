@@ -71,7 +71,7 @@ div.desc {
 }
 
 .responsive {
-  padding: 0px 4px 0px 4px;
+  padding: 0px 4px 0px 0px;
   float: left;
   width: 24.99999%;
 }
