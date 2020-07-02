@@ -43,8 +43,7 @@ function main()
     if ($value['type'] == 'file') {
       if ($value['gps'] != '0,0')
             { 
-                $marker .= "L.marker([" . $value['gps'] . "]).addTo(map).bindPopup('<img src=\"cache/" . md5($value['path']) . ".jpg\" class=\"mapthumb\"/>');";
-                $setview = $value['gps'];
+                $marker .= "markerArray.push(L.marker([" . $value['gps'] . "]).addTo(map).bindPopup('<img src=\"cache/" . md5($value['path']) . ".jpg\" class=\"mapthumb\"/>'));";
             }
 
       echo '<div class="responsive"><div class="gallery">
@@ -59,7 +58,7 @@ function main()
 
   echo '<div class="clearfix"></div>';
 
-  showmap($setview, $marker);
+  showmap($marker);
 
   echo "<script type='text/javascript'>$.fancybox.defaults.buttons = ['zoom', 'slideShow', 'download', 'close'];</body></html>";
 }
@@ -122,7 +121,7 @@ function scan($dir)
         $lat = gps($exif["GPSLatitude"], $exif['GPSLatitudeRef']);
         $lon = gps($exif["GPSLongitude"], $exif['GPSLongitudeRef']);
 
-        $files[]  = array("name" => $f, "type" => "file", "path" => $dir . '/' . $f, "title" => $title, "gps" => "$lat,$lon", "size" => sprintf("%u", filesize($dir . '/' . $f)));
+        $files[] = array("name" => $f, "type" => "file", "path" => $dir . '/' . $f, "title" => $title, "gps" => "$lat,$lon", "size" => sprintf("%u", filesize($dir . '/' . $f)));
         $c++;
       }
     }
@@ -142,13 +141,13 @@ function resize($filename)
   imagejpeg($thumb, 'cache/' . md5($filename) . '.jpg', 92);
 }
 
-function showmap($setview, $marker)
+function showmap($marker)
 {
-
+  $setview = '49.77, 13.60';
   echo '<div id="map"></div><script type="text/javascript">var map = L.map("map").setView([' . $setview . '], 10);
 L.tileLayer("https://data.hzspk.cz/{z}/{x}/{y}.png", {attribution: \'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors\'}).addTo(map);';
-
-  echo $marker;
+  echo 'var markerArray = []; '.$marker;
+  echo 'var group = L.featureGroup(markerArray).addTo(map); map.fitBounds(group.getBounds());';
   echo "</script>";
 }
 
