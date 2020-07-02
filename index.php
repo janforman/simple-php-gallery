@@ -147,7 +147,7 @@ function showmap($marker)
   echo '<div id="map"></div><script type="text/javascript">var map = L.map("map").setView([' . $setview . '], 10);
 L.tileLayer("https://data.hzspk.cz/{z}/{x}/{y}.png", {attribution: \'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors\'}).addTo(map);';
   echo 'var markerArray = []; '.$marker;
-  echo 'var group = L.featureGroup(markerArray).addTo(map); map.fitBounds(group.getBounds());';
+  if ($marker) echo 'var group = L.featureGroup(markerArray).addTo(map); map.fitBounds(group.getBounds());';
   echo "</script>";
 }
 
