@@ -41,8 +41,11 @@ function main()
 
   foreach ($json[$folder]['items'] as $value) {
     if ($value['type'] == 'file') {
-      $marker .= "L.marker([" . $value['gps'] . "]).addTo(map).bindPopup('<img src=\"cache/" . md5($value['path']) . ".jpg\" class=\"mapthumb\"/>');";
-      $setview = $value['gps'];
+      if ($value['gps'] != '0,0')
+            { 
+                $marker .= "L.marker([" . $value['gps'] . "]).addTo(map).bindPopup('<img src=\"cache/" . md5($value['path']) . ".jpg\" class=\"mapthumb\"/>');";
+                $setview = $value['gps'];
+            }
 
       echo '<div class="responsive"><div class="gallery">
       <a target="_blank" href="' . $value['path'] . '" data-fancybox="images" data-caption="' . $value['title'] . '">
