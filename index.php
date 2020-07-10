@@ -1,4 +1,7 @@
 <?php
+/////////////////////////////////////////// MAIN
+////////////////////////////////////////////////
+
 function main()
 {
 show_header('Gallery');
@@ -46,10 +49,13 @@ echo '<div class="sticky">
 
   echo '<div class="clearfix"></div>';
 
-  if (!$_GET[f]) showmap($marker,500); else showmap($marker,350);
+  if (!$_GET[f]) show_map($marker,500); else show_map($marker,350);
 
   show_footer();
 }
+
+/////////////////////////////////////////// RESCAN do it by https://domain.com/gallery?do=rescan
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 function rescan()
 {
@@ -89,6 +95,8 @@ function thumbs()
 }
 
 /////////////////////////////////////////// FUNCTIONS
+/////////////////////////////////////////////////////
+
 function show_header($title)
 {
 echo '<!DOCTYPE html>
@@ -158,7 +166,7 @@ function resize($filename)
   imagejpeg($thumb, 'cache/' . md5($filename) . '.jpg', 92);
 }
 
-function showmap($marker,$size)
+function show_map($marker,$size)
 {
   $setview = '49.77, 13.60';
   echo '<div id="map" style="height: '.$size.'px"></div><script type="text/javascript">var map = L.map("map").setView([' . $setview . '], 10);
@@ -189,7 +197,9 @@ function gps($coordinate, $hemisphere)
 }
 
 
-////// loader
+/////////////////////////////////////////// LOADER
+//////////////////////////////////////////////////
+
 switch ($_GET['do']) {
   case 'rescan';
     rescan();
