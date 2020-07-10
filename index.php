@@ -1,21 +1,9 @@
 <?php
 function main()
 {
-  echo '<!DOCTYPE html>
-<html>
-<head>
-  <link rel="stylesheet" href="index.css?r=1.02" type="text/css" />
-  <link rel="stylesheet" href="assets/fancybox/jquery.fancybox.min.css" />
-  <script src="assets/js/jquery-1.10.0.min.js"></script>
-  <script src="assets/fancybox/jquery.fancybox.min.js" charset="UTF-8"></script>
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="assets/leaflet/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
-  <script src="assets/leaflet/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
-  <title>Gallery</title>
-</head>
+show_header('Gallery');
 
-<body>
-  <div class="sticky">
+echo '<div class="sticky">
   <h1><a href="?">HOME</a></h1> - ';
 
   $json = json_decode(file_get_contents('index.json'), TRUE);
@@ -42,7 +30,7 @@ function main()
   foreach ($json[$folder]['items'] as $value) {
     if ($value['type'] == 'file') {
       if ($value['gps'] != '0,0')
-            { 
+            {
                 $marker .= "markerArray.push(L.marker([" . $value['gps'] . "]).addTo(map).bindPopup('<img src=\"cache/" . md5($value['path']) . ".jpg\" class=\"mapthumb\"/>'));";
             }
 
@@ -58,9 +46,9 @@ function main()
 
   echo '<div class="clearfix"></div>';
 
-  showmap($marker);
+  if (!$_GET[f]) showmap($marker,500); else showmap($marker,350);
 
-  echo "<script type='text/javascript'>$.fancybox.defaults.buttons = ['zoom', 'slideShow', 'download', 'close'];</body></html>";
+  show_footer();
 }
 
 function rescan()
@@ -73,7 +61,10 @@ function rescan()
   $fopen = fopen("index.json", "w") or die("Unable to open file!");
   fwrite($fopen, $txt);
   fclose($fopen);
+  show_header('Rescan');
+  echo '<h1>Reindexing</h1><br/><br/>';
   echo 'Indexed OK <a href="?do=thumbs">generate thumbnails</a>';
+  show_footer();
 }
 
 function thumbs()
@@ -90,10 +81,36 @@ function thumbs()
       }
     }
   }
+  show_header('Thumbnails');
+  echo '<h1>Generate thumbnails</h1><br/><br/>';
   echo "OK " . $c;
+  echo '<br/><a href="?">go back</a>';
+  show_footer();
 }
 
-// functions
+/////////////////////////////////////////// FUNCTIONS
+function show_header($title)
+{
+echo '<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="index.css?r=1.02" type="text/css" />
+  <link rel="stylesheet" href="assets/fancybox/jquery.fancybox.min.css" />
+  <script src="assets/js/jquery-1.10.0.min.js"></script>
+  <script src="assets/fancybox/jquery.fancybox.min.js" charset="UTF-8"></script>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="assets/leaflet/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+  <script src="assets/leaflet/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+  <title>'.$title.'</title>
+</head>
+<body>';
+}
+
+function show_footer()
+{
+echo "<script type='text/javascript'>$.fancybox.defaults.buttons = ['zoom', 'slideShow', 'download', 'close'];</body></html>";
+}
+
 function scan($dir)
 {
   $files = array();
@@ -141,10 +158,10 @@ function resize($filename)
   imagejpeg($thumb, 'cache/' . md5($filename) . '.jpg', 92);
 }
 
-function showmap($marker)
+function showmap($marker,$size)
 {
   $setview = '49.77, 13.60';
-  echo '<div id="map"></div><script type="text/javascript">var map = L.map("map").setView([' . $setview . '], 10);
+  echo '<div id="map" style="height: '.$size.'px"></div><script type="text/javascript">var map = L.map("map").setView([' . $setview . '], 10);
 L.tileLayer("https://data.hzspk.cz/{z}/{x}/{y}.png", {attribution: \'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors\'}).addTo(map);';
   echo 'var markerArray = []; '.$marker;
   if ($marker) echo 'var group = L.featureGroup(markerArray).addTo(map); map.fitBounds(group.getBounds());';
@@ -168,7 +185,7 @@ function gps($coordinate, $hemisphere)
   }
   list($degrees, $minutes, $seconds) = $coordinate;
   $sign = ($hemisphere == 'W' || $hemisphere == 'S') ? -1 : 1;
-  return $sign * ($degrees + $minutes / 60 + $seconds / 3600);
+  return round($sign * ($degrees + $minutes / 60 + $seconds / 3600),4);
 }
 
 
