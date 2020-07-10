@@ -48,7 +48,7 @@ function main()
 
   echo '<div class="clearfix"></div>';
 
-  if (!$_GET[f]) show_map($marker, 500);
+  if (!$_GET['f']) show_map($marker, 500);
   else show_map($marker, 350);
 
   show_footer();
