@@ -170,7 +170,7 @@ function show_map($marker, $size)
 {
   $setview = '49.77, 13.60';
   echo '<div id="map" style="height: ' . $size . 'px"></div><script type="text/javascript">var map = L.map("map").setView([' . $setview . '], 10);
-L.tileLayer("https://data.hzspk.cz/{z}/{x}/{y}.png", {attribution: \'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors\'}).addTo(map);';
+L.tileLayer("https://osm.hzspk.cz/{z}/{x}/{y}.png", {attribution: \'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors\'}).addTo(map);';
   echo 'var markerArray = []; ' . $marker;
   if ($marker) echo 'var group = L.featureGroup(markerArray).addTo(map); map.fitBounds(group.getBounds());';
   echo "</script>";
